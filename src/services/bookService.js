@@ -21,6 +21,20 @@ const getAllBooks = async ()=>{
 
 }
 
+const searchBooks = async (value)=>{
+
+  try {
+      const searchRegex = new RegExp(value.replace(/['"]+/g, ""), "i")  
+      const books = await Book.find({$or:[{title:searchRegex},{author:searchRegex},{genre:searchRegex}]})
+      return books;
+
+      
+
+  } catch (error) {
+     throw error;
+  }
+}
+
 
 const updateBook = async (updatedBookData,id)=>{
     try {
@@ -53,6 +67,6 @@ const deleteBook = async (id)=>{
 }
 
 
-module.exports = {postBook,getAllBooks,updateBook,deleteBook}
+module.exports = {postBook,getAllBooks,updateBook,deleteBook,searchBooks}
 
 

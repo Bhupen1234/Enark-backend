@@ -20,6 +20,17 @@ const getAllBooks = async(req,res)=>{
 
 }
 
+const searchBooks = async(req,res)=>{
+    try {
+      const value = req.query.value;
+      const searchedBooks = await bookService.searchBooks(value);
+      res.status(200).json(searchedBooks);
+    } catch (error) {
+      
+      res.status(500).json({message:error.message});
+    }
+}
+
 
 const updateBook = async(req,res)=>{
   try {
@@ -53,7 +64,7 @@ const deleteBook = async(req, res) => {
 }
 
 
-module.exports = {postBook,getAllBooks,updateBook,deleteBook}
+module.exports = {postBook,getAllBooks,updateBook,deleteBook,searchBooks}
 
 
 
