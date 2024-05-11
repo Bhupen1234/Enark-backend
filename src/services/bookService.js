@@ -1,14 +1,7 @@
 const Book = require('../models/Book');
 
 
-const postBook = async (bookData)=>{
-    try {
-        const book = await Book.create(bookData)
-        return book;
-    } catch (error) {
-        throw error;
-    }
-}
+
 
 
 const getAllBooks = async ()=>{
@@ -19,6 +12,17 @@ const getAllBooks = async ()=>{
        throw error;
    }
 
+}
+
+
+const postBook = async (bookData)=>{
+    try {
+         await Book.create(bookData)
+        const allBooks = await getAllBooks();
+        return allBooks;
+    } catch (error) {
+       throw error;
+    }
 }
 
 const searchBooks = async (value)=>{
@@ -42,8 +46,9 @@ const updateBook = async (updatedBookData,id)=>{
     if(!book){
         throw new Error('Book not found');
     }
-    const updatedBook = await Book.findByIdAndUpdate(id,updatedBookData,{new:true})
-    return updatedBook;
+     await Book.findByIdAndUpdate(id,updatedBookData,{new:true})
+    const allBooks = await getAllBooks();
+    return allBooks;
     } catch (error) {
         throw error;
     }
@@ -59,8 +64,9 @@ const deleteBook = async (id)=>{
        if(!book){
            throw new Error('Book not found');
        }
-       const deletedBook = await Book.findByIdAndDelete(id);
-       return deletedBook;
+     await Book.findByIdAndDelete(id);
+       const allBooks = await getAllBooks();
+       return allBooks;
    } catch (error) {
     throw error;
    }
