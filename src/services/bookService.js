@@ -29,6 +29,7 @@ const searchBooks = async (value)=>{
 
   try {
       const searchRegex = new RegExp(value.replace(/['"]+/g, ""), "i")  
+      console.log(searchRegex)
       const books = await Book.find({$or:[{title:searchRegex},{author:searchRegex},{genre:searchRegex}]})
       return books;
 
